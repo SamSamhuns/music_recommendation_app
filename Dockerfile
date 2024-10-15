@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 python:3.10
+FROM python:3.10
 
 # install python-venv reqs
 RUN apt-get update --no-install-recommends \
