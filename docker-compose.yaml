@@ -1,5 +1,6 @@
 services:
   music_analysis:
+    image: music_analysis
     container_name: music_analysis_cont
     build:
       context: ./

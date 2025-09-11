@@ -13,7 +13,7 @@ Backend with fastapi+uvicorn for music database analysis with LLMs and PostgreSQ
     - [2. Create shared volumes directory](#2-create-shared-volumes-directory)
   - [Running the log analysis service](#running-the-log-analysis-service)
     - [Option A) Docker Compose](#option-a-docker-compose)
-      - [Note:](#note)
+      - [Note](#note)
     - [Option B) Docker and local virtual env](#option-b-docker-and-local-virtual-env)
       - [Option Bi) Uvicorn server with fastapi with Docker](#option-bi-uvicorn-server-with-fastapi-with-docker)
       - [Option Bii) Uvicorn server with fastapi with venv](#option-bii-uvicorn-server-with-fastapi-with-venv)
@@ -27,13 +27,13 @@ Backend with fastapi+uvicorn for music database analysis with LLMs and PostgreSQ
 
 ## API Architecture Setup
 
-[<img src="app/static/images/log analyzer.drawio.png">]()
+![Log_Analyzer](app/static/images/log_analyzer.drawio.png)
 
 ## Setup
 
 ### 1. Create .env file
 
-Create a `.env` file with the following keys with updated values for unames and pass:
+Create a `.env` file with the following keys with updated values for `usernames` and `passwords`:
 
 ```yaml
 # set to ERROR for deployment
@@ -78,11 +78,12 @@ docker compose up -d
 
 The server will be available at <http://localhost:8080> if using the default port.
 
-#### Note:
+#### Note
 
-When changing settings in `docker-compose.yaml` for the mongodb service, the existing docker and shared volumes might have to be purged i.e. when changing replicaset name.
+When changing settings in `docker-compose.yaml` for the mongodb service, the existing docker and shared volumes might have to be purged i.e. when changing `replicaset` name.
 
-<p style="color:red;">WARNING: This will delete all existing user, document, and vector records.</p>
+> [!WARNING]
+> This will delete all existing user, document, and vector records.
 
 ```shell
 docker-compose down
@@ -132,13 +133,13 @@ The server will be available at <http://localhost:8080> if using the default por
 
 Set the PGAdmin client in the host name/address to:
 
-```
+```yaml
 host.docker.internal
 ```
 
 ### Optional: frontend with streamlit
 
-[<img src="app/static/images/streamlit_example.png">]()
+![streamlit_eg](app/static/images/streamlit_example.png)
 
 ```shell
 pip install streamlit==1.38.0
@@ -191,19 +192,18 @@ The new SQL table should also be created through the PHPMyAdmin GUI/mysql comman
 
 The following files must be edited.
 
--   Edit `app/static/sql/init.sql` for changing/adding log table schema
--   Edit `app/models/model.py` to add/edit the LogFileType
--   Edit `app/api/log_format/log_parser.py` for parsing logs
--   Edit `app/core/setup.py` for adding table schema and data sample info for text2sql conversion
+- Edit `app/static/sql/init.sql` for changing/adding log table schema
+- Edit `app/models/model.py` to add/edit the LogFileType
+- Edit `app/api/log_format/log_parser.py` for parsing logs
+- Edit `app/core/setup.py` for adding table schema and data sample info for text2sql conversion
 
 Editing Tests
 
--   Edit `tests/conftests.py` for setting the correct values for the test database
--   Edit `tests/api/test_mysql_api.py` for setting the correct values for the test database
-
+- Edit `tests/conftests.py` for setting the correct values for the test database
+- Edit `tests/api/test_mysql_api.py` for setting the correct values for the test database
 
 ## References
 
--   [Spotify API](https://developer.spotify.com/documentation/web-api/reference/get-recommendations)
--   [pgvector](https://github.com/pgvector/pgvector)
--   [Text-to-SQL by LLMs: A Benchmark Evaluation](https://arxiv.org/pdf/2308.15363)
+- [Spotify API](https://developer.spotify.com/documentation/web-api/reference/get-recommendations)
+- [pgvector](https://github.com/pgvector/pgvector)
+- [Text-to-SQL by LLMs: A Benchmark Evaluation](https://arxiv.org/pdf/2308.15363)
