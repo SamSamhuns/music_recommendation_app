@@ -2,7 +2,7 @@
 Main fastapi server file
 
 This file contains the main FastAPI server setup. It:
-- Creates the FastAPI app
+- Creates the FastAPI music_rec
 - Adds middleware (CORS, timing)
 - Mounts static files
 - Includes API routers
@@ -15,7 +15,7 @@ Args:
     sql (module): SQL qa API router
 
 Returns:
-    app (FastAPI): The FastAPI application object
+    music_rec (FastAPI): The FastAPI application object
 """
 import os
 import time
@@ -34,57 +34,57 @@ from routes import upsert, sql
 
 
 def get_application():
-    """Returns a FastAPI app object.  
+    """Returns a FastAPI music_rec object.  
 
     Returns:
-        app (FastAPI): A FastAPI app object.
+        music_rec (FastAPI): A FastAPI music_rec object.
     """
-    app = FastAPI(title=cfg.PROJECT_NAME,
+    music_rec = FastAPI(title=cfg.PROJECT_NAME,
                   description=cfg.PROJECT_DESCRIPTION,
                   debug=cfg.DEBUG,
                   version=cfg.VERSION)
-    app.mount("/static", StaticFiles(directory="./app/static"), name="static")
-    app.add_middleware(
+    music_rec.mount("/static", StaticFiles(directory="./music_rec/static"), name="static")
+    music_rec.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    return app
+    return music_rec
 
 
 # Docs
 def custom_openapi():
-    """Returns the OpenAPI schema for the FastAPI app.
+    """Returns the OpenAPI schema for the FastAPI music_rec.
 
     Returns:
         openapi_schema (dict): The OpenAPI schema.
     """
-    if app.openapi_schema:
-        return app.openapi_schema
+    if music_rec.openapi_schema:
+        return music_rec.openapi_schema
     openapi_schema = get_openapi(
         title=cfg.PROJECT_NAME,
         version=cfg.VERSION,
         description=cfg.PROJECT_DESCRIPTION,
-        routes=app.routes,
+        routes=music_rec.routes,
     )
-    app.openapi_schema = openapi_schema
-    return app.openapi_schema
+    music_rec.openapi_schema = openapi_schema
+    return music_rec.openapi_schema
 
 
 # logging
 logger = logging.getLogger("music_analysis_server")
 
 # Routing
-app = get_application()
-app.include_router(upsert.router, prefix="/upsert", tags=["upsert"])
-app.include_router(sql.router, prefix="/sql", tags=["sql"])
-app.openapi = custom_openapi
+music_rec = get_application()
+music_rec.include_router(upsert.router, prefix="/upsert", tags=["upsert"])
+music_rec.include_router(sql.router, prefix="/sql", tags=["sql"])
+music_rec.openapi = custom_openapi
 
 
 # api call time middleware
-@app.middleware("http")
+@music_rec.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     """Adds an X-Process-Time header with the time taken to process the request.
 
@@ -99,17 +99,17 @@ async def add_process_time_header(request: Request, call_next):
     return response
 
 
-@app.get("/")
+@music_rec.get("/")
 async def index():
     """Returns a welcome message."""
     return {"Welcome to the Log Analysis service": "Please visit /docs for list of apis"}
 
 
-@app.get('/favicon.ico')
+@music_rec.get('/favicon.ico')
 async def favicon():
     """Returns the favicon.ico file."""
     file_name = "favicon.ico"
-    file_path = os.path.join(app.root_path, "app/static", file_name)
+    file_path = os.path.join(music_rec.root_path, "music_rec/static", file_name)
     return FileResponse(path=file_path)
 
 
@@ -128,5 +128,5 @@ if __name__ == '__main__':
     args.reload = False if args.workers > 1 else args.reload
 
     logger.info("Uvicorn server running on %s:%s with %s workers", args.host_ip, args.port, args.workers)
-    uvicorn.run("server:app", host=args.host_ip, port=args.port,
-                workers=args.workers, reload=args.reload, reload_dirs=['app'])
+    uvicorn.run("server:music_rec", host=args.host_ip, port=args.port,
+                workers=args.workers, reload=args.reload, reload_dirs=['music_rec'])
