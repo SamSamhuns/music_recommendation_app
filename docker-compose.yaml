@@ -24,7 +24,7 @@ services:
 
   postgres:
     build:
-      context: ./app/static/postgres
+      context: ./music_rec/static/postgres
       dockerfile: postgres.Dockerfile
     restart: always
     ports:
@@ -40,7 +40,7 @@ services:
       retries: 5
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/pg_data:/var/lib/postgresql/data
-      - ./app/static/postgres/vector_extension.sql:/docker-entrypoint-initdb.d/0-vector_extension.sql
+      - ./music_rec/static/postgres/vector_extension.sql:/docker-entrypoint-initdb.d/0-vector_extension.sql
     networks:
       - pg_net
 

@@ -41,4 +41,4 @@ COPY . "$WORKDIR"
 RUN chown -R "$UNAME" "$WORKDIR"
 
 USER "$UNAME"
-CMD ["python", "app/server.py", "--port", "8080"]
+CMD ["python", "music_rec/server.py", "--port", "8080"]
