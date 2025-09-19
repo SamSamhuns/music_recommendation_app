@@ -65,9 +65,9 @@ def run_sql_script(postgres_conn, sql_script: str, params: tuple = None, commit:
                 results = cursor.fetchall()
                 logger.info("SQL script executed successfully, fetched results. ✅️")
                 return {"status": "success", "message": "SQL script executed successfully.", "data": results}
-    except psycopg.Error as excep:
-        logger.error("%s: SQL script execution failed ❌", excep)
-        return {"status": "failed", "message": f"PostgreSQL script execution error: {excep}"}
+    except psycopg.Error as exception:
+        logger.error("%s: SQL script execution failed ❌", exception)
+        return {"status": "failed", "message": f"PostgreSQL script execution error: {exception}"}
 
 
 def insert_bulk_data_into_sql(postgres_conn, tb_name, data_dicts: list, commit: bool = True) -> dict:
@@ -94,9 +94,9 @@ def insert_bulk_data_into_sql(postgres_conn, tb_name, data_dicts: list, commit: 
                     return {"status": "success", "message": "Bulk records inserted into PostgreSQL db"}
                 logger.info("Bulk record insertion waiting to be committed to PostgreSQL db.🕓")
                 return {"status": "success", "message": "Bulk record insertion waiting to be committed."}
-    except psycopg.Error as excep:
-        logger.error("%s: PostgreSQL bulk record insertion failed ❌", excep)
-        return {"status": "failed", "message": f"PostgreSQL bulk record insertion error: {str(excep)}"}
+    except psycopg.Error as exception:
+        logger.error("%s: PostgreSQL bulk record insertion failed ❌", exception)
+        return {"status": "failed", "message": f"PostgreSQL bulk record insertion error: {str(exception)}"}
 
 
 def insert_data_into_sql(postgres_conn, tb_name, data_dict: dict, commit: bool = True) -> dict:
@@ -118,8 +118,8 @@ def insert_data_into_sql(postgres_conn, tb_name, data_dict: dict, commit: bool =
                     return {"status": "success", "message": "Record inserted into PostgreSQL db"}
                 logger.info("Record insertion waiting to be committed to PostgreSQL db.🕓")
                 return {"status": "success", "message": "Record insertion waiting to be committed."}
-    except psycopg.Error as excep:
-        logger.error("%s: PostgreSQL record insertion failed ❌", excep)
+    except psycopg.Error as exception:
+        logger.error("%s: PostgreSQL record insertion failed ❌", exception)
         return {"status": "failed", "message": "PostgreSQL record insertion error"}
 
 
@@ -140,8 +140,8 @@ def select_data_from_sql_with_id(postgres_conn, tb_name, data_id: int) -> dict:
                     return {"status": "failed", "message": f"PostgreSQL record with id: {data_id} does not exist"}
                 logger.info("Data with id: %s retrieved from PostgreSQL db.✅️", data_id)
                 return {"status": "success", "message": f"Record matching id: {data_id} retrieved from PostgreSQL db", "data": data}
-    except psycopg.Error as excep:
-        logger.error("%s: PostgreSQL record retrieval failed ❌", excep)
+    except psycopg.Error as exception:
+        logger.error("%s: PostgreSQL record retrieval failed ❌", exception)
         return {"status": "failed", "message": "PostgreSQL record retrieval error"}
 
 
@@ -161,8 +161,8 @@ def select_all_data_from_sql(postgres_conn, tb_name) -> dict:
                     return {"status": "failed", "message": "No PostgreSQL records were found."}
                 logger.info("All records retrieved from PostgreSQL db.✅️")
                 return {"status": "success", "message": "All records retrieved from PostgreSQL db", "data": data}
-    except psycopg.Error as excep:
-        logger.error("%s: PostgreSQL record retrieval failed ❌", excep)
+    except psycopg.Error as exception:
+        logger.error("%s: PostgreSQL record retrieval failed ❌", exception)
         return {"status": "failed", "message": "PostgreSQL record retrieval error"}
 
 
@@ -188,8 +188,8 @@ def delete_data_from_sql_with_id(postgres_conn, tb_name, data_id: int, commit: b
                     return {"status": "success", "message": "Record deleted from PostgreSQL db"}
                 logger.info("Record deletion waiting to be committed to PostgreSQL db.🕓")
                 return {"status": "success", "message": "Record deletion waiting to be committed."}
-    except psycopg.Error as excep:
-        logger.error("%s: PostgreSQL record deletion failed ❌", excep)
+    except psycopg.Error as exception:
+        logger.error("%s: PostgreSQL record deletion failed ❌", exception)
         return {"status": "failed", "message": "PostgreSQL record deletion error"}
 
 

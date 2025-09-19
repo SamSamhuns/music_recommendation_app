@@ -6,7 +6,7 @@ from models.model import LLMModel
 from utils.common import parse_num_str
 
 # Base URL for the API
-API_URL = f"http://127.0.0.1:{cfg.API_SERVER_PORT}"
+API_URL = f"http://127.0.0.1:{cfg.FASTAPI_SERVER_PORT}"
 
 # Configuring the sidebar with options
 st.sidebar.title("Log Analyzer Services")

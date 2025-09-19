@@ -16,7 +16,7 @@ DEBUG: bool = os.environ.get("DEBUG", "") != "False"
 VERSION: str = "0.0.1"
 
 # server settings
-API_SERVER_PORT = int(os.getenv("API_SERVER_PORT", default="8080"))
+FASTAPI_SERVER_PORT = int(os.getenv("FASTAPI_SERVER_PORT", default="8080"))
 
 # save directories
 ROOT_STORAGE_DIR = os.getenv("ROOT_STORAGE_DIR", default="volumes/music_analysis")

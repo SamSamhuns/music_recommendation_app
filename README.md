@@ -19,7 +19,7 @@ Backend with fastapi+uvicorn for music database analysis with LLMs and PostgreSQ
       - [Option Bii) Uvicorn server with fastapi with venv](#option-bii-uvicorn-server-with-fastapi-with-venv)
     - [Running PGAdmin](#running-pgadmin)
     - [Optional: frontend with streamlit](#optional-frontend-with-streamlit)
-    - [Optional: expose app through ngrok docker for sharing localhost on the internet](#optional-expose-app-through-ngrok-docker-for-sharing-localhost-on-the-internet)
+    - [Optional: expose music\_rec through ngrok docker for sharing localhost on the internet](#optional-expose-music_rec-through-ngrok-docker-for-sharing-localhost-on-the-internet)
   - [Testing](#testing)
   - [For Developers](#for-developers)
     - [To change/add/delete new log table schemas](#to-changeadddelete-new-log-table-schemas)
@@ -27,7 +27,7 @@ Backend with fastapi+uvicorn for music database analysis with LLMs and PostgreSQ
 
 ## API Architecture Setup
 
-![Log_Analyzer](app/static/images/log_analyzer.drawio.png)
+![Log_Analyzer](music_rec/static/images/log_analyzer.drawio.png)
 
 ## Setup
 
@@ -39,7 +39,7 @@ Create a `.env` file with the following keys with updated values for `usernames`
 # set to ERROR for deployment
 DEBUG_LEVEL=DEBUG
 # http api server
-API_SERVER_PORT=8080
+FASTAPI_SERVER_PORT=8080
 # spotify api keys
 CLIENT_ID=<CLIENT_ID>
 CLIENT_SECRET=<CLIENT_SECRET>
@@ -124,7 +124,7 @@ pip install -r requirements.txt
 Start server at HTTP port EXPOSED_HTTP_PORT. Note the host names must contain addresses when using docker microservices and the fastapi+uvicorn server outside the docker compose environment.
 
 ```shell
-python app/server.py -p EXPOSED_HTTP_PORT
+python music_rec/server.py -p EXPOSED_HTTP_PORT
 ```
 
 The server will be available at <http://localhost:8080> if using the default port.
@@ -139,14 +139,14 @@ host.docker.internal
 
 ### Optional: frontend with streamlit
 
-![streamlit_eg](app/static/images/streamlit_example.png)
+![streamlit_eg](music_rec/static/images/streamlit_example.png)
 
 ```shell
 pip install streamlit==1.38.0
-streamlit run app/streamlit_frontend.py
+streamlit run music_rec/streamlit_frontend.py
 ```
 
-### Optional: expose app through ngrok docker for sharing localhost on the internet
+### Optional: expose music_rec through ngrok docker for sharing localhost on the internet
 
 WARNING: Never use for production
 
@@ -192,10 +192,10 @@ The new SQL table should also be created through the PHPMyAdmin GUI/mysql comman
 
 The following files must be edited.
 
-- Edit `app/static/sql/init.sql` for changing/adding log table schema
-- Edit `app/models/model.py` to add/edit the LogFileType
-- Edit `app/api/log_format/log_parser.py` for parsing logs
-- Edit `app/core/setup.py` for adding table schema and data sample info for text2sql conversion
+- Edit `music_rec/static/sql/init.sql` for changing/adding log table schema
+- Edit `music_rec/models/model.py` to add/edit the LogFileType
+- Edit `music_rec/api/log_format/log_parser.py` for parsing logs
+- Edit `music_rec/core/setup.py` for adding table schema and data sample info for text2sql conversion
 
 Editing Tests
 

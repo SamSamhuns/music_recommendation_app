@@ -7,7 +7,7 @@ import requests
 import base64
 
 # Client ID and Client Secret
-CLIENT_ID = 'Use your client ID'  # clien_id
+CLIENT_ID = 'Use your client ID'  # client_id
 CLIENT_SECRET = 'Use your client secret'  # client_secret
 
 # Use Base64 to encode the client ID and client secret
