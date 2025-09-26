@@ -178,3 +178,6 @@ volumes
 
 # reference dir
 .reference
+
+# dataset dir
+dataset
