@@ -2,14 +2,13 @@
 Setup connections
 """
 import base64
-from typing import Callable
 
 import requests
 import psycopg
 from core.config import (
     POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER,
     POSTGRES_PASSWORD, POSTGRES_DATABASE,
-    CLIENT_ID, CLIENT_SECRET)
+    SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET)
 from contextlib import contextmanager
 
 
@@ -27,7 +26,7 @@ def get_postgres_connection() -> psycopg.Connection:
 
 
 @contextmanager
-def postgres_conn() -> Callable:
+def postgres_conn() -> callable:
     """Yield psycopg3 connection object."""
     conn = get_postgres_connection()
     try:
@@ -39,7 +38,7 @@ def postgres_conn() -> Callable:
 ######## set up spotify api access token #########
 
 # Use Base64 to encode the client ID and client secret
-credentials = f"{CLIENT_ID}:{CLIENT_SECRET}"
+credentials = f"{SPOTIPY_CLIENT_ID}:{SPOTIPY_CLIENT_SECRET}"
 credentials_base64 = base64.b64encode(credentials.encode())
 
 # Make a request for the access token

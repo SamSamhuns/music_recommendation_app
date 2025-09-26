@@ -44,5 +44,5 @@ POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", default="pass")
 POSTGRES_DATABASE = os.getenv("POSTGRES_DATABASE", default="default")
 
 # Spotify API conf
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+SPOTIPY_CLIENT_ID = os.getenv("SPOTIPY_CLIENT_ID")
+SPOTIPY_CLIENT_SECRET = os.getenv("SPOTIPY_CLIENT_SECRET")
