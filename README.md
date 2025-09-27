@@ -10,7 +10,7 @@ Backend with fastapi+uvicorn for music database analysis with LLMs and PostgreSQ
   - [API Architecture Setup](#api-architecture-setup)
   - [Setup](#setup)
     - [1. Create .env file](#1-create-env-file)
-    - [2. Create shared volumes directory](#2-create-shared-volumes-directory)
+    - [2. Create shared volumes directory and download Kaggle spotify-million dataset](#2-create-shared-volumes-directory-and-download-kaggle-spotify-million-dataset)
   - [Running the log analysis service](#running-the-log-analysis-service)
     - [Option A) Docker Compose](#option-a-docker-compose)
       - [Note](#note)
@@ -33,7 +33,7 @@ Backend with fastapi+uvicorn for music database analysis with LLMs and PostgreSQ
 
 ### 1. Create .env file
 
-Create a `.env` file with the following keys with updated values for `usernames` and `passwords`:
+Create a `.env` file with the following keys with updated values for `spotify` keys, `usernames` and `passwords`:
 
 ```yaml
 # set to ERROR for deployment
@@ -41,9 +41,10 @@ DEBUG_LEVEL=DEBUG
 # http api server
 FASTAPI_SERVER_PORT=8080
 # spotify api keys
-CLIENT_ID=<CLIENT_ID>
-CLIENT_SECRET=<CLIENT_SECRET>
+SPOTIPY_CLIENT_ID=<SPOTIPY_CLIENT_ID>
+SPOTIPY_CLIENT_SECRET=<SPOTIPY_CLIENT_SECRET>
 # postgresql
+POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
 POSTGRES_USER=user
 POSTGRES_PASSWORD=pass
@@ -54,16 +55,19 @@ PGADMIN_DEFAULT_EMAIL=<PGADMIN_DEFAULT_EMAIL>
 PGADMIN_DEFAULT_PASSWORD=<PGADMIN_DEFAULT_PASSWORD>
 ```
 
-### 2. Create shared volumes directory
+### 2. Create shared volumes directory and download Kaggle spotify-million dataset
 
 ```shell
 mkdir -p volumes/music_analysis
 mkdir -p volumes/store
+mkdir -p datasets
+# Download spotify-million music dataset
+python scripts/download_spotify_million.py
 ```
 
 ## Running the log analysis service
 
-There are two options for running the analysis service. Both require `docker compose` (Available from the [official docker site](https://docs.docker.com/compose/install/)). `$docker-compose ...` style commands have been depreciated.
+There are two options for running the analysis service. Both require `docker compose`.
 
 ### Option A) Docker Compose
 
